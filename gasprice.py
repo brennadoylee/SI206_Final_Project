@@ -2,9 +2,12 @@ import json
 import unittest
 import os
 import requests
+import re
 import http.client
 import sqlite3
 import time
+import matplotlib
+import matplotlib.pyplot as plt
 
 path = os.path.dirname(os.path.realpath(__file__))
 oil_cache = path + '/' + "cache_oilweekly.json"
@@ -46,7 +49,7 @@ def get_info(url, CACHE_FNAME = oil_cache):
 		write_cache(CACHE_FNAME, cache_dict)
 		return cache_dict[url]
 
-area_id = ['PET.WG4ST_R10_1.W', 'PET.WG4ST_R30_1.W', 'PET.WG4ST_R20_1.W', 'PET.WG4ST_R40_1.W ', 'PET.WG4ST_R50_1.W']
+area_id = ['PET.WG4ST_R10_1.W', 'PET.WG4ST_R30_1.W', 'PET.WG4ST_R20_1.W', 'PET.WG4ST_R40_1.W', 'PET.WG4ST_R50_1.W']
 
 
 for area in area_id:
@@ -59,36 +62,108 @@ oil_prices = read_cache("cache_oilweekly.json")
 # setup database
 
 path = os.path.dirname(os.path.abspath(__file__))
-conn = sqlite3.connect(path + '/' + "oil.db")
+conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
+#create east coast table
+cur.execute("DROP TABLE IF EXISTS EastCoastPricing")
+cur.execute("CREATE TABLE IF NOT EXISTS EastCoastPricing (Date VARCHAR(9) PRIMARY KEY, EastCoastPrice BOOL)")
 
-cur.execute("DROP TABLE IF EXISTS Pricing")
-cur.execute("CREATE TABLE IF NOT EXISTS Pricing (Area TEXT PRIMARY KEY, WEEK_1 VARCHAR(10), WEEK_2 VARCHAR(10),  WEEK_3 VARCHAR(10), WEEK_4 VARCHAR(10), WEEK_5 VARCHAR(10), WEEK_6 VARCHAR(10), WEEK_7 VARCHAR(10), WEEK_8 VARCHAR(10), WEEK_9 VARCHAR(10), WEEK_10 VARCHAR(10), WEEK_11 VARCHAR(10), WEEK_12 VARCHAR(10), WEEK_13 VARCHAR(10), WEEK_14 VARCHAR(10), WEEK_15 VARCHAR(10), WEEK_16 VARCHAR(10), WEEK_17 VARCHAR(10), WEEK_18 VARCHAR(10), WEEK_19 VARCHAR(10))")
+count1 = 0
+base_url = get_url('PET.WG4ST_R10_1.W')
+area_info = get_info(base_url)
+for i in area_info['series'][0]['data'][0:100]:
+	date = i[0]
+	newdate = date[0:4] + "-" + date[4:6] + "-" + date[-2:]
+	pr = i[1]
+	count1 += 1
+	if count1 % 20 == 0:
+		print("Pausing")
+		time.sleep(1)
+		print("Ok")
+	cur.execute("INSERT INTO EastCoastPricing (Date, EastCoastPrice) VALUES (?,?)", (newdate, pr))
+	conn.commit()
+print("Finished adding East Coast data to database")
 
+#create Gulf Coast Table
+cur.execute("DROP TABLE IF EXISTS GulfCoastPricing")
+cur.execute("CREATE TABLE IF NOT EXISTS GulfCoastPricing (Date VARCHAR(9) PRIMARY KEY, GulfCoastPrice BOOL)")
 
-for area in area_id:
-	count = 1
-	lst = []
-	base_url = get_url(area)
-	area_info = get_info(base_url)
-	name = area_info['series'][0]['name']
-	for i in area_info['series'][0]['data'][0:19]:
-		p = i[1]
-		lst.append(p)
-		count += 1
-		if count == 20:
-			print("Pausing")
-			time.sleep(1)
-			print("Ok")
-			cur.execute("INSERT INTO Pricing (Area, WEEK_1, WEEK_2, WEEK_3, WEEK_4, WEEK_5, WEEK_6, WEEK_7, WEEK_8, WEEK_9, WEEK_10, WEEK_11, WEEK_12, WEEK_13, WEEK_14, WEEK_15, WEEK_16, WEEK_17,WEEK_18, WEEK_19) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (name, lst[0], lst[1], lst[2], lst[3], lst[4], lst[5], lst[6], lst[7], lst[8], lst[9], lst[10], lst[11], lst[12], lst[13], lst[14], lst[15], lst[16], lst[17], lst[18]))
-			conn.commit()
-print("Finished adding data to database")
-			
+base_url2 = get_url('PET.WG4ST_R30_1.W')
+area_info2 = get_info(base_url2)
+for a in area_info2['series'][0]['data'][0:100]:
+	date2 = a[0]
+	newdate2 = date2[0:4] + "-" + date2[4:6] + "-" + date2[-2:]
+	pr2 = a[1]
+	count1 += 1
+	if count1 % 20 == 0:
+		print("Pausing")
+		time.sleep(1)
+		print("Ok")
+	cur.execute("INSERT INTO GulfCoastPricing (Date, GulfCoastPrice) VALUES (?,?)", (newdate2, pr2))
+	conn.commit()
+print("Finished adding Gulf Coast data to database")	
+
+#create Midwest Table
+cur.execute("DROP TABLE IF EXISTS MidwestPricing")
+cur.execute("CREATE TABLE IF NOT EXISTS MidwestPricing (Date VARCHAR(9) PRIMARY KEY, MidwestPrice BOOL)")
+
+base_url3 = get_url('PET.WG4ST_R20_1.W')
+area_info3 = get_info(base_url3)
+for b in area_info3['series'][0]['data'][0:100]:
+	date3 = b[0]
+	newdate3 = date3[0:4] + "-" + date3[4:6] + "-" + date3[-2:]
+	pr3 = b[1]
+	count1 += 1
+	if count1 % 20 == 0:
+		print("Pausing")
+		time.sleep(1)
+		print("Ok")
+	cur.execute("INSERT INTO MidwestPricing (Date, MidwestPrice) VALUES (?,?)", (newdate3, pr3))
+	conn.commit()
+print("Finished adding Midwest data to database")
+
+#create Rocky Mountain table
+cur.execute("DROP TABLE IF EXISTS RockyMountainPricing")
+cur.execute("CREATE TABLE IF NOT EXISTS RockyMountainPricing (Date VARCHAR(9) PRIMARY KEY, RockyMountainPrice BOOL)")
+
+base_url4 = get_url('PET.WG4ST_R40_1.W')
+area_info4 = get_info(base_url4)
+for c in area_info4['series'][0]['data'][0:100]:
+	date4 = c[0]
+	newdate4 = date4[0:4] + "-" + date4[4:6] + "-" + date4[-2:]
+	pr4 = c[1]
+	count1 += 1
+	if count1 % 20 == 0:
+		print("Pausing")
+		time.sleep(1)
+		print("Ok")
+	cur.execute("INSERT INTO RockyMountainPricing (Date, RockyMountainPrice) VALUES (?,?)", (newdate4, pr4))
+	conn.commit()
+print("Finished adding Rocky Mountain data to database")
+
+#create West Coast table
+cur.execute("DROP TABLE IF EXISTS WestCoastPricing")
+cur.execute("CREATE TABLE IF NOT EXISTS WestCoastPricing (Date VARCHAR(9) PRIMARY KEY, WestCoastPrice BOOL)")
+
+base_url5 = get_url("PET.WG4ST_R50_1.W")
+area_info5 = get_info(base_url5)
+for d in area_info5['series'][0]['data'][0:100]:
+	date5 = d[0]
+	newdate5 = date5[0:4] + "-" + date5[4:6] + "-" + date5[-2:]
+	pr5 = d[1]
+	count1 += 1
+	if count1 % 20 == 0:
+		print("Pausing")
+		time.sleep(1)
+		print("Ok")
+	cur.execute("INSERT INTO WestCoastPricing (Date, WestCoastPrice) VALUES (?,?)", (newdate5, pr5))
+	conn.commit()
+print("Finished adding West Coast data to database")
 #=============================================================================================================================================================================================================================================================================================================================================================
-#find averages of each week from Pricing table
+#find averages of each week from Pricing table and returns list of tuples
 
-cur.execute("SELECT AVG(WEEK_1), AVG(WEEK_2), AVG(WEEK_3), AVG(WEEK_4), AVG(WEEK_5), AVG(WEEK_6), AVG (WEEK_7), AVG(WEEK_8), AVG(WEEK_9), AVG(WEEK_10), AVG(WEEK_11), AVG(WEEK_12), AVG(WEEK_13), AVG(WEEK_14), AVG(WEEK_15), AVG(WEEK_16), AVG(WEEK_17), AVG(WEEK_18), AVG(WEEK_19) AS Average FROM Pricing")
+#cur.execute("SELECT AVG(WEEK_1), AVG(WEEK_2), AVG(WEEK_3), AVG(WEEK_4), AVG(WEEK_5), AVG(WEEK_6), AVG (WEEK_7), AVG(WEEK_8), AVG(WEEK_9), AVG(WEEK_10), AVG(WEEK_11), AVG(WEEK_12), AVG(WEEK_13), AVG(WEEK_14), AVG(WEEK_15), AVG(WEEK_16), AVG(WEEK_17), AVG(WEEK_18), AVG(WEEK_19) AS Average FROM Pricing")
 r = cur.fetchall()
 result = []
 week_count = 1
@@ -123,13 +198,27 @@ length_of_avg(lst_a)
 # find_price("West Coast (PADD 5) Ending Stocks of Conventional Motor Gasoline, Weekly", "WEEK_14", "2337")
 
 #find max value within a column
-def max_value(week):
-	maxx = cur.execute(f"SELECT MAX({week}) FROM Pricing")
-	return maxx
+# def max_value(week):
+# 	maxx = cur.execute(f"SELECT MAX({week}) FROM Pricing")
+# 	return maxx
 
-max_value("WEEK_6")
+# max_value("WEEK_6")
 # =============================================================================================================
-#test calculation methods
+#create visualization
+
+#cur.execute("SELECT Area FROM Pricing")
+l = cur.fetchall()
+a_list = []
+for i in l:
+	for x in i:
+		a_list.append(x)
+b_list = []
+for y in a_list:
+	find = re.findall("^.*?(?=\s\()", y)
+	b_list.append(find)
+
+finalarea_list = [item for sublist in b_list for item in sublist]
+print(finalarea_list)
 
 
 
