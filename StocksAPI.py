@@ -8,6 +8,8 @@ import json
 import sqlite3
 import os
 import time
+import numpy as np 
+import matplotlib.ticker as ticker
 
 baseURL = "https://cloud.iexapis.com/"
 
@@ -29,7 +31,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
-
+'''
 
 #Collecting Information for Nasdaq Stock
 count = 0
@@ -45,4 +47,61 @@ for d in historicalPrices:
     if count % 10 == 0:
         print('Pausing for a bit...')
         time.sleep(5)
+
+'''
+def Ndate(year = 2020, month = 4, day = 1):
+    if len(str(month)) == 1:
+        month = "0" + str(month)
+    if len(str(day)) ==1:
+        day = '0' + str(day) 
+    year = str(year)
+    day = str(day)
+    month = str(month)
+    d = str(year + '-' + month + '-' + day)
+    cur.execute('SELECT close FROM Nasdaq WHERE timestamp = ?', (d,))
+    stock = cur.fetchall()
+    print(stock)
+    return stock
+
+#Retrieve Nasdaq stock prices
+def nasdaq(cur = cur, conn = conn):
+    cur.execute('SELECT Date, ClosingPrice FROM Nasdaq')
+    data = cur.fetchall()
+    return data
+
+n = nasdaq()
+d, p = zip(*n)
+
+fig = plt.figure(figsize=(10,5))
+ax = fig.add_subplot(111)
+ax.plot(d, p, color = 'teal')
+plt.xticks(fontsize = 8, rotation = 45)
+ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+ax.set_xlabel('Date')
+ax.set_ylabel('NASDAW Closing Stock Price')
+ax.set_title('NASDAQ Closing Stock Price by Date')
+fig.savefig('NASDAQClosingPrice.png')
+
+plt.show()
+
+
+dec = []
+jan = []
+feb = []
+mar = []
+apr = []
+other = []
+for date in n:
+    if '2019-12' in date[0]:
+        dec.append(date)
+    elif '2020-01' in date[0]:
+        jan.append(date)
+    elif '2020-02' in date[0]:
+        feb.append(date)
+    elif '2020-03' in date[0]:
+        mar.append(date)
+    elif '2020-04' in date[0]:
+        apr.append(date)
+    else:
+        print(date)
 
