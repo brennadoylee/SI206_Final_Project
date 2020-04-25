@@ -1,6 +1,11 @@
 import tweepy
 from textblob import TextBlob
 import csv
+import matplotlib.pyplot as plt
+import json
+import sqlite3
+import os
+import time
 
 
 consumer_key='SVaUMV92pJosw7f95Fdif2Eqi'
@@ -58,17 +63,25 @@ def get_all_tweets(screen_name):
         print("...{} tweets downloaded so far".format(len(alltweets)))
 
     #organizing the data and calling tweet_analysis to get the sentiment 
-    outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8"), tweet_analysis(str(tweet.text.encode("utf-8")))] for tweet in alltweets if "#COVID" in str(tweet.text.encode("utf-8"))]
 
-    #write the csv  
-    with open('CDC_tweets.csv' , 'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(["id","created_at","text", "sentiment"])
-        writer.writerows(outtweets)
+    outtweets = [[str(tweet_analysis(str(tweet.text.encode("utf-8")))), str(tweet.created_at.date()), str(tweet.id_str), str(tweet.text.encode("utf-8"))] for tweet in alltweets if "#COVID" in str(tweet.text.encode("utf-8"))]
+    return outtweets
 
-    pass
 
-if __name__ == '__main__':
-    #pass in the username of the account you want to download
-    get_all_tweets(screenname)
+#setting up database
+path = os.path.dirname(os.path.abspath(__file__))
+conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
+cur = conn.cursor()
 
+all_tweets = get_all_tweets(screenname)
+count = 0
+cur.execute("DROP TABLE IF EXISTS Twitter")
+cur.execute("CREATE TABLE IF NOT EXISTS Twitter(sentiment TEXT PRIMARY KEY, date TEXT, id TEXT , tweet TEXT)")
+conn.commit()
+for tweet in all_tweets:
+    count += 1
+    cur.execute("INSERT OR IGNORE INTO Twitter VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
+    conn.commit()
+    if count % 10 == 0:
+        print('Pausing for a bit...')
+        time.sleep(5)
