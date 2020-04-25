@@ -25,8 +25,8 @@ def getHistoricalPrices(stock):
 start = datetime(2019, 12, 1)
 end = datetime(2020, 4, 23)
 
-
-conn = sqlite3.connect('stock_data.sqlite')
+path = os.path.dirname(os.path.abspath(__file__))
+conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
 
@@ -36,7 +36,7 @@ count = 0
 historicalPrices = getHistoricalPrices('NDAQ')
 columns = ['close', 'volume']
 cur.execute("DROP TABLE IF EXISTS Nasdaq")
-cur.execute("CREATE TABLE IF NOT EXISTS Nasdaq(timestamp, close text)")
+cur.execute("CREATE TABLE IF NOT EXISTS Nasdaq(Date PRIMARY KEY, ClosingPrice)")
 conn.commit()
 for d in historicalPrices:
     count += 1
@@ -46,32 +46,3 @@ for d in historicalPrices:
         print('Pausing for a bit...')
         time.sleep(5)
 
-#Collecting Information for Zoom Stock
-count = 0
-historicalPrices = getHistoricalPrices('ZM')
-columns = ['close', 'volume']
-cur.execute("DROP TABLE IF EXISTS Zoom")
-cur.execute("CREATE TABLE IF NOT EXISTS Zoom(timestamp, close text)")
-conn.commit()
-for d in historicalPrices:
-    count += 1
-    cur.execute("INSERT INTO Zoom VALUES (?, ?)", (d, historicalPrices[d]['close']))
-    conn.commit()
-    if count % 10 == 0:
-        print('Pausing for a bit...')
-        time.sleep(5)
-
-#Collecting Information for Twitter Stock
-count = 0
-historicalPrices = getHistoricalPrices('TWTR')
-columns = ['close', 'volume']
-cur.execute("DROP TABLE IF EXISTS Twitter")
-cur.execute("CREATE TABLE IF NOT EXISTS Twitter(timestamp, close text)")
-conn.commit()
-for d in historicalPrices:
-    count += 1
-    cur.execute("INSERT INTO Twitter VALUES (?, ?)", (d, historicalPrices[d]['close']))
-    conn.commit()
-    if count % 10 == 0:
-        print('Pausing for a bit...')
-        time.sleep(5)
