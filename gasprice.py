@@ -8,6 +8,8 @@ import sqlite3
 import time
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.ticker as ticker
 
 path = os.path.dirname(os.path.realpath(__file__))
 oil_cache = path + '/' + "cache_oilweekly.json"
@@ -140,6 +142,7 @@ for c in area_info4['series'][0]['data'][0:100]:
 		print("Ok")
 	cur.execute("INSERT INTO RockyMountainPricing (Date, RockyMountainPrice) VALUES (?,?)", (newdate4, pr4))
 	conn.commit()
+#print(cur.fetchall())
 print("Finished adding Rocky Mountain data to database")
 
 #create West Coast table
@@ -161,64 +164,88 @@ for d in area_info5['series'][0]['data'][0:100]:
 	conn.commit()
 print("Finished adding West Coast data to database")
 #=============================================================================================================================================================================================================================================================================================================================================================
-#find averages of each week from Pricing table and returns list of tuples
 
-#cur.execute("SELECT AVG(WEEK_1), AVG(WEEK_2), AVG(WEEK_3), AVG(WEEK_4), AVG(WEEK_5), AVG(WEEK_6), AVG (WEEK_7), AVG(WEEK_8), AVG(WEEK_9), AVG(WEEK_10), AVG(WEEK_11), AVG(WEEK_12), AVG(WEEK_13), AVG(WEEK_14), AVG(WEEK_15), AVG(WEEK_16), AVG(WEEK_17), AVG(WEEK_18), AVG(WEEK_19) AS Average FROM Pricing")
+cur.execute(
+	'''
+	SELECT EastCoastPricing.Date, EastCoastPricing.EastCoastPrice, GulfCoastPricing.GulfCoastPrice, MidwestPricing.MidwestPrice, RockyMountainPricing.RockyMountainPrice, WestCoastPricing.WestCoastPrice
+	FROM ((((EastCoastPricing
+	INNER JOIN  GulfCoastPricing ON EastCoastPricing.Date=GulfCoastPricing.Date)
+	INNER JOIN MidwestPricing ON EastCoastPricing.Date=MidwestPricing.Date)
+	INNER JOIN RockyMountainPricing ON EastCoastPricing.Date=RockyMountainPricing.Date)
+	INNER JOIN WestCoastPricing ON EastCoastPricing.Date=WestCoastPricing.Date);
+	'''
+)
+
+# =================================================================================================================================================================================================================
+
 r = cur.fetchall()
-result = []
-week_count = 1
-for i in r:
-	for x in i:
-		time = "Week " + str(week_count)	
-		#print(time)
-		money = "$" + str(x)
-		tup = (time, money)	
-		result.append(tup)
-		week_count += 1
-	print(result)
 
+#get list of each price from each area per week
+ec_list = []
+gc_list = []
+m_list = []
+rm_list = []
+wc_list = []
+for y in r:
+	ec = y[1]
+	gc = y[2]
+	m = y[3]
+	rm = y[4]
+	wc = y[5]
+	ec_list.append(ec)
+	gc_list.append(gc)
+	m_list.append(m)
+	rm_list.append(rm)
+	wc_list.append(wc)
+eastcoast_list = ec_list[::-1]
+gulfcoast_list = gc_list[::-1]
+midwest_list = m_list[::-1]
+rockymountain_list = rm_list[::-1]
+westcoast_list = wc_list[::-1]
+print(len(eastcoast_list), len(gulfcoast_list), len(midwest_list), len(rockymountain_list), len(westcoast_list))
+
+#find averages of each week from joined 
+print(r)
+d_list = []
+average_list = []
+for x in r:
+	avg = (x[1] + x[2] + x[3] + x[4] + x[5])/5
+	d_list.append(x[0])
+	average_list.append(avg)
+date_list = (d_list[::-1])
+avg_list = (average_list[::-1])
 #=============================================================================================================================================================================================================================================================================================================================================================
-# more calculations
 
-#takes in a list of averages per week and returns length
-def length_of_avg(lst_avg):
-	l = len(lst_avg)
-	return l
+#create visualization of multiple line lineplot for each area
+fig, ax = plt.subplots()
+ax.plot(date_list, eastcoast_list, "-r", label = "East Coast")
+ax.plot(date_list, gulfcoast_list, "-m", label = "Gulf Coast")
+ax.plot(date_list, midwest_list, "-y", label = "Midwest")
+ax.plot(date_list, rockymountain_list, "-b", label = "Rocky Mountains")
+ax.plot(date_list, westcoast_list, "-g", label = "West Coast")
+ax.legend(loc = "upper left")
+plt.xticks(fontsize = 8, rotation = 45)
+ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+ax.set_xlabel("Date")
+ax.set_ylabel("Ending Stock of Conventional Motor Gasoline (Dollars) Per Week")
+ax.set_title("Ending Stock of Conventional Motor Gasoline Per Week By Area in U.S.")
+ax.grid
 
-#testing method
-lst_a = [('Week 1', '$4791.2'), ('Week 2', '$4495.4'), ('Week 3', '$4296.0'), ('Week 4', '$4246.4'), ('Week 5', '$4003.8'), ('Week 6', '$4737.8'), ('Week 7', '$5037.2'), ('Week 8', '$5180.6'), ('Week 9', '$5332.2'), ('Week 10', '$5372.4'), ('Week 11', '$5433.2'), ('Week 12', '$5544.0'), ('Week 13', '$5484.8'), ('Week 14', '$5725.6'), ('Week 15', '$5462.6'), ('Week 16', '$5285.0'), ('Week 17', '$5229.2'), ('Week 18', '$4943.2'), ('Week 19', '$4709.0')]
-length_of_avg(lst_a)
+fig.savefig("AreaOilPriceWeekly.png")
 
-#find specific price based on area and week
-# def find_price(area, week, price):
-# 	cur.execute("SELECT ? FROM Pricing WHERE ?",(area, week, price))
-# 	cur.fetchall()
+plt.show()
 
-# find_price("Gulf Coast (PADD 3) Ending Stocks of Conventional Motor Gasoline, Weekly", "WEEK_2", "7239")
-# find_price("West Coast (PADD 5) Ending Stocks of Conventional Motor Gasoline, Weekly", "WEEK_14", "2337")
-
-#find max value within a column
-# def max_value(week):
-# 	maxx = cur.execute(f"SELECT MAX({week}) FROM Pricing")
-# 	return maxx
-
-# max_value("WEEK_6")
-# =============================================================================================================
+# =======================================================================================================
 #create visualization
 
-#cur.execute("SELECT Area FROM Pricing")
-l = cur.fetchall()
-a_list = []
-for i in l:
-	for x in i:
-		a_list.append(x)
-b_list = []
-for y in a_list:
-	find = re.findall("^.*?(?=\s\()", y)
-	b_list.append(find)
+fig, ax = plt.subplots()
+ax.plot(date_list, avg_list)
+plt.xticks(fontsize = 8, rotation = 45)
+ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+ax.set_xlabel("Date")
+ax.set_ylabel("Average Ending Stock of Conventional Motor Gasoline (Dollars)")
+ax.set_title("Average Ending Stock of Conventional Motor Gasoline, Weekly")
+ax.grid()
 
-finalarea_list = [item for sublist in b_list for item in sublist]
-print(finalarea_list)
-
-
-
+fig.savefig("AverageOilPriceWeekly.png")
+plt.show()
