@@ -58,7 +58,7 @@ def Ndate(year = 2020, month = 4, day = 1):
     day = str(day)
     month = str(month)
     d = str(year + '-' + month + '-' + day)
-    cur.execute('SELECT close FROM Nasdaq WHERE timestamp = ?', (d,))
+    cur.execute('SELECT close FROM Nasdaq WHERE Date = ?', (d,))
     stock = cur.fetchall()
     print(stock)
     return stock
