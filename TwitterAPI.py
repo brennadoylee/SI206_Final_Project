@@ -90,12 +90,12 @@ cur = conn.cursor()
 #creating Twitter table
 all_tweets = get_all_tweets(screenname)
 count = 0
-cur.execute("DROP TABLE IF EXISTS Twitter")
-cur.execute("CREATE TABLE IF NOT EXISTS Twitter(sentiment TEXT PRIMARY KEY, date TEXT, id TEXT , tweet TEXT)")
+cur.execute("DROP TABLE IF EXISTS Tweets")
+cur.execute("CREATE TABLE IF NOT EXISTS Tweets(sentiment TEXT PRIMARY KEY, date TEXT, id TEXT , tweet TEXT)")
 conn.commit()
 for tweet in all_tweets:
     count += 1
-    cur.execute("INSERT OR IGNORE INTO Twitter VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
+    cur.execute("INSERT OR IGNORE INTO Tweets VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
     conn.commit()
     if count % 10 == 0:
         print('Pausing for a bit...')
@@ -107,7 +107,6 @@ for tweet in all_tweets:
     if tweet[1] not in corona_tweet_count:
         corona_tweet_count[tweet[1]] = 1
     corona_tweet_count[tweet[1]] += 1
-print(corona_tweet_count)
 
 #creating dictionaries for number of positive, negative, and neutral tweets about coronavirus published by the CDC per day
 pos_tweet_count = {}
@@ -154,12 +153,17 @@ for key in neutral_tweet_count:
     neutral_dates.append(key)
     neutral_tweets.append(neutral_tweet_count[key])
 
+# to reverse the dates on the x axis
+def reverse(lst): 
+    new_lst = lst[::-1] 
+    return new_lst
+
 
 # creating total Number of Tweets per day from the CDC containing #COVID or #coronavirus graph
 
 fig = plt.figure(figsize = (10,5))
 ax = fig.add_subplot(111)
-ax.plot(total_dates, total_tweets, color = "green")
+ax.plot(reverse(total_dates), total_tweets, color = "green")
 plt.xticks(fontsize = 5, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
@@ -173,7 +177,7 @@ plt.show()
 
 fig = plt.figure(figsize = (10,5))
 ax = fig.add_subplot(111)
-ax.plot(pos_dates, pos_tweets, color = "green", label = "positive")
+ax.plot(reverse(pos_dates), pos_tweets, color = "green", label = "positive")
 ax.plot(neg_tweets, color = "red", label = "negative")
 ax.plot(neutral_tweets, color = "blue", label = "neutral")
 plt.xticks(fontsize = 5, rotation = 90)
