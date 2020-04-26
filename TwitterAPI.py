@@ -34,7 +34,7 @@ def tweet_analysis(tweet):
 
 def get_all_tweets(screen_name):
     startDate = datetime.datetime(2019, 12, 1, 0, 0, 0)
-    endDate =   datetime.datetime(2020, 4, 1, 0, 0, 0)
+    endDate =   datetime.datetime(2020, 4, 26, 0, 0, 0)
     #initializing a list to hold all the tweepy Tweets
     tweets = []  
 
@@ -84,7 +84,7 @@ cur.execute("DROP TABLE IF EXISTS TweetSentiment")
 cur.execute("CREATE TABLE IF NOT EXISTS TweetSentiment(id TEXT PRIMARY KEY, date TEXT, sentiment TEXT , tweet TEXT)")
 conn.commit()
 for tweet in all_tweets:
-    if "COVID" in tweet[3]:
+    if "COVID" or "virus" in tweet[3]:
         count += 1
         cur.execute("INSERT OR IGNORE INTO TweetSentiment VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
         conn.commit()
@@ -104,7 +104,7 @@ all_tweet_count = {}
 for tweet in all_tweets:
     date = tweet[1]
     text = tweet[3]
-    if "COVID" in text:
+    if "COVID" or "virus" in text:
         if date not in corona_tweet_count:
             corona_tweet_count[date] = 1
         else:
@@ -130,11 +130,9 @@ def covid_tweet_count(cur = cur, conn = conn):
 covid_tweet_count = covid_tweet_count(cur = cur, conn = conn)
 total_dates = []
 tweet_count = []
-tweet_count.append(0)
 for tweet in covid_tweet_count:
     total_dates.append(tweet[0])
     tweet_count.append(tweet[1])
-total_dates.append("2019-12-01")
     
 
 # creating a graph of the number of Covid related tweets per day from the TotalTweet Data
@@ -145,7 +143,7 @@ plt.xticks(fontsize = 5, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
 ax.set_ylabel("Number of Tweets")
-ax.set_title("Number of Tweets the CDC has Released containing the word 'COVID' since Deceber 1, 2019")
+ax.set_title("Number of Tweets the CDC has Released containing the word 'COVID' or 'Virus' since Deceber 1, 2019")
 ax.grid()
 fig.savefig("total_tweets.png")
 plt.show()
@@ -182,19 +180,17 @@ for tweet in tweet_sentiment:
 #organizing the counts into lists
 pos_tweets = []
 pos_dates = []
-pos_tweets.append(0)
+
 for key in pos_tweet_count:
     pos_tweets.append(pos_tweet_count[key])
     pos_dates.append(key)
-pos_dates.append("2019-12-01")
+
 
 neg_tweets = []
-neg_tweets.append(0)
 for key in neg_tweet_count:
     neg_tweets.append(neg_tweet_count[key])
 
 neutral_tweets = []
-neutral_tweets.append(0)
 for key in neutral_tweet_count:
     neutral_tweets.append(neutral_tweet_count[key])
 
@@ -208,7 +204,7 @@ plt.xticks(fontsize = 5, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
 ax.set_ylabel("Number of Tweets")
-ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' released by the CDC since December 1, 2019")
+ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'Virus' released by the CDC since December 1, 2019")
 ax.grid()
 ax.legend()
 fig.savefig("setiment_analysis.png")
