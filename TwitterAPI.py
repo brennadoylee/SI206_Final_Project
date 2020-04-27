@@ -74,7 +74,7 @@ conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
 #creating table for sentiment analysis of only covid tweets table
-'''
+
 count = 0
 cur.execute("DROP TABLE IF EXISTS TweetSentiment")
 cur.execute("CREATE TABLE IF NOT EXISTS TweetSentiment(id TEXT PRIMARY KEY, date TEXT, sentiment TEXT , tweet TEXT)")
@@ -112,7 +112,6 @@ for key in corona_tweet_count:
     if count % 20 == 0:
         print('Pausing for a bit...')
         time.sleep(1)
-'''
 
 
 # -------------------------------------------- PULLING DATA / CREATING MATPLOTLIB GRAPHS-------------------------------------
