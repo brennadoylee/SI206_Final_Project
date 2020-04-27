@@ -31,7 +31,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
-
+'''
 #Collecting Information for Nasdaq Stock
 count = 0
 historicalPrices = getHistoricalPrices('NDAQ', start, end)
@@ -47,7 +47,7 @@ for d in historicalPrices:
         print('Pausing for a bit...')
         time.sleep(5)
 
-
+'''
 #Retrieve NASDAQ stock price by a certain day
 def Ndate(year = 2020, month = 4, day = 1):
     if len(str(month)) == 1:
@@ -165,18 +165,18 @@ ax1.plot(nasdate_2020, nasprice_2020, color = 'deepskyblue')
 plt.suptitle('2020 Gas vs NASDAQ Closing Stock Prices in Dollars', fontsize = 14)
 plt.ylabel('NASDAQ Closing Stock Price', fontsize = 10)
 plt.xlabel('Date')
-plt.xticks(fontsize = 8, rotation = 90)
+plt.xticks(fontsize = 8, rotation = 45)
 ax1.xaxis.set_major_locator(ticker.LinearLocator(10))
 
 
 ax2 = plt.subplot(1, 2, 2)
 plt.plot(gasdate_2020, gasprice_2020, color = 'mediumpurple')
 plt.xlabel('Date')
-plt.xticks(fontsize = 8, rotation = 90)
+plt.xticks(fontsize = 8, rotation = 45)
 ax2.xaxis.set_major_locator(ticker.LinearLocator(10))
 plt.ylabel('Average Closing Stock of Conventional Motor Gasoline', fontsize = 10)
 
-#plt.tight_layout()
+plt.tight_layout()
 
 fig.savefig('2020GasvsNASDAQStockPrices.png')
 plt.show()
