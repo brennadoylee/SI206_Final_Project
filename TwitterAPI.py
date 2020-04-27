@@ -39,21 +39,21 @@ def get_all_tweets(screen_name):
 
     # make the initial request for most recent tweets (200 is the maximum allowed count)
     
-    tmpTweets = api.user_timeline(screen_name = screenname)
+    alltweets = api.user_timeline(screen_name = screenname)
 
     # getting tweets from the CDC
     screen_name = "CDC"
 
     #grabbing tweets between december 2019 and april 2020
-    for tweet in tmpTweets:
+    for tweet in alltweets:
         if tweet.created_at < endDate and tweet.created_at > startDate:
             tweets.append(tweet)
 
     # keep grabbing tweets until there are no tweets left to grab
-    while (tmpTweets[-1].created_at > startDate):
-        print("Last Tweet @", tmpTweets[-1].created_at, " - fetching some more")
-        tmpTweets = api.user_timeline(screen_name = screenname, max_id = tmpTweets[-1].id)
-        for tweet in tmpTweets:
+    while (alltweets[-1].created_at > startDate):
+        print("Last Tweet @", alltweets[-1].created_at, " - fetching some more")
+        alltweets = api.user_timeline(screen_name = screenname, max_id = alltweets[-1].id)
+        for tweet in alltweets:
             if tweet.created_at < endDate and tweet.created_at > startDate:
                 tweets.append(tweet)
 
@@ -156,7 +156,7 @@ def divide_chunks(lst, group):
 n = 7
 weeks_list = list(divide_chunks(new, n)) 
 
-#creating a dictionary of all of the weeks and their total number of tweets that week
+#creating a dictionary of all of the weeks and their average number of covid-related tweets that week
 def tweets_per_week(lst):
     week_count = {}
     count = 0
