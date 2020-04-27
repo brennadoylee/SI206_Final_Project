@@ -1,8 +1,6 @@
 import json
-import unittest
 import os
 import requests
-import re
 import http.client
 import sqlite3
 import time
