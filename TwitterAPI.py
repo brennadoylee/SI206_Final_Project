@@ -85,9 +85,9 @@ for tweet in all_tweets:
         count += 1
         cur.execute("INSERT OR IGNORE INTO TweetSentiment VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
         conn.commit()
-        if count % 20 == 0:
+        if count % 10 == 0:
             print('Pausing for a bit...')
-            time.sleep(1)
+            time.sleep(5)
 
 print("------")
 
@@ -110,9 +110,9 @@ for tweet in all_tweets:
 for key in corona_tweet_count:
     cur.execute("INSERT OR IGNORE INTO TotalTweets VALUES (?, ?)", (key, corona_tweet_count[key]))
     conn.commit()
-    if count % 20 == 0:
+    if count % 10 == 0:
         print('Pausing for a bit...')
-        time.sleep(1)
+        time.sleep(5)
 
 
 # -------------------------------------------- PULLING DATA / CREATING MATPLOTLIB GRAPHS-------------------------------------
