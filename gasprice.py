@@ -272,8 +272,25 @@ for i in info_list:
 	twe = i[1]
 	list_dates.append(date)
 	tweets.append(twe)
-print(len(list_dates))
-print(len(tweets))
+# print(len(list_dates))
+# print(len(tweets))
 
-# for i in info_list:
-# 	date = 
+#tweet count vs oil stock visualization
+plt.figure(1)
+tweet_ax = plt.subplot(1,2,1)
+tweet_ax.plot(list_dates, tweets, color = "cyan")
+plt.suptitle("Tweet count vs Average Ending Stock of Conventional Motor Gasoline")
+plt.ylabel("Tweet Counts")
+plt.xlabel("Date")
+plt.xticks(fontsize = 8, rotation = 45)
+tweet_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+
+oil_ax = plt.subplot(1, 2, 2)
+plt.plot(date_list, avg_list, color = "magenta")
+plt.xlabel('Date')
+plt.ylabel('Average Ending Stock of Conventional Motor Gasoline (Dollars)')
+plt.xticks(fontsize = 8, rotation = 45)
+oil_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+
+fig.savefig("TweetCountvsOilStocks")
+plt.show()
