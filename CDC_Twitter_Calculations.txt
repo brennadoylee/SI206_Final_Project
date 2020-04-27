@@ -1,0 +1,162 @@
+The Average Number of Coronavirus-Related Tweets Posted by the CDC Each Week Starting with the Week of 12/1/2019 - 12/7/2019.
+----------------------------------------------------------------------------------------------------------------------------
+During Week 1, the CDC released an average of 6.714285714285714 coronavirus-related tweets.
+During Week 2, the CDC released an average of 16.285714285714285 coronavirus-related tweets.
+During Week 3, the CDC released an average of 24.714285714285715 coronavirus-related tweets.
+During Week 4, the CDC released an average of 34.285714285714285 coronavirus-related tweets.
+During Week 5, the CDC released an average of 42.857142857142854 coronavirus-related tweets.
+During Week 6, the CDC released an average of 48.57142857142857 coronavirus-related tweets.
+During Week 7, the CDC released an average of 57.42857142857143 coronavirus-related tweets.
+During Week 8, the CDC released an average of 63.42857142857143 coronavirus-related tweets.
+During Week 9, the CDC released an average of 72.28571428571429 coronavirus-related tweets.
+During Week 10, the CDC released an average of 78.0 coronavirus-related tweets.
+During Week 11, the CDC released an average of 84.42857142857143 coronavirus-related tweets.
+During Week 12, the CDC released an average of 94.85714285714286 coronavirus-related tweets.
+During Week 13, the CDC released an average of 107.42857142857143 coronavirus-related tweets.
+During Week 14, the CDC released an average of 115.85714285714286 coronavirus-related tweets.
+During Week 15, the CDC released an average of 124.57142857142857 coronavirus-related tweets.
+During Week 16, the CDC released an average of 131.28571428571428 coronavirus-related tweets.
+During Week 17, the CDC released an average of 139.14285714285714 coronavirus-related tweets.
+During Week 18, the CDC released an average of 149.42857142857142 coronavirus-related tweets.
+During Week 19, the CDC released an average of 159.85714285714286 coronavirus-related tweets.
+During Week 20, the CDC released an average of 163.28571428571428 coronavirus-related tweets.
+--------
+The Sentiment Analysis -- Positive, Negative, and Neutral -- of Coronavirus-Related Tweets Posted by the CDC per Day.
+----------------------------------------------------------------------------------------------------------------------------
+2019-12-01 : 2 positive tweets | 0 negative tweets | 4 neutral tweets.
+2019-12-02 : 6 positive tweets | 2 negative tweets | 4 neutral tweets.
+2019-12-03 : 7 positive tweets | 2 negative tweets | 4 neutral tweets.
+2019-12-04 : 7 positive tweets | 2 negative tweets | 5 neutral tweets.
+2019-12-05 : 11 positive tweets | 0 negative tweets | 7 neutral tweets.
+2019-12-06 : 8 positive tweets | 2 negative tweets | 7 neutral tweets.
+2019-12-07 : 2 positive tweets | 0 negative tweets | 3 neutral tweets.
+2019-12-08 : 0 positive tweets | 2 negative tweets | 0 neutral tweets.
+2019-12-09 : 7 positive tweets | 3 negative tweets | 6 neutral tweets.
+2019-12-10 : 8 positive tweets | 2 negative tweets | 4 neutral tweets.
+2019-12-11 : 6 positive tweets | 2 negative tweets | 4 neutral tweets.
+2019-12-12 : 10 positive tweets | 2 negative tweets | 8 neutral tweets.
+2019-12-13 : 4 positive tweets | 0 negative tweets | 5 neutral tweets.
+2019-12-16 : 6 positive tweets | 0 negative tweets | 3 neutral tweets.
+2019-12-17 : 6 positive tweets | 0 negative tweets | 3 neutral tweets.
+2019-12-18 : 6 positive tweets | 0 negative tweets | 3 neutral tweets.
+2019-12-19 : 9 positive tweets | 2 negative tweets | 6 neutral tweets.
+2019-12-20 : 10 positive tweets | 3 negative tweets | 8 neutral tweets.
+2019-12-21 : 3 positive tweets | 0 negative tweets | 0 neutral tweets.
+2019-12-23 : 2 positive tweets | 4 negative tweets | 4 neutral tweets.
+2019-12-24 : 4 positive tweets | 0 negative tweets | 0 neutral tweets.
+2019-12-26 : 4 positive tweets | 2 negative tweets | 0 neutral tweets.
+2019-12-27 : 4 positive tweets | 3 negative tweets | 3 neutral tweets.
+2019-12-30 : 8 positive tweets | 2 negative tweets | 5 neutral tweets.
+2019-12-31 : 4 positive tweets | 4 negative tweets | 3 neutral tweets.
+2020-01-01 : 2 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-01-02 : 3 positive tweets | 2 negative tweets | 5 neutral tweets.
+2020-01-03 : 6 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-01-04 : 2 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-01-06 : 6 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-01-07 : 7 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-01-08 : 7 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-01-09 : 8 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-01-10 : 6 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-01-11 : 2 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-01-13 : 3 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-01-14 : 7 positive tweets | 2 negative tweets | 5 neutral tweets.
+2020-01-15 : 3 positive tweets | 3 negative tweets | 6 neutral tweets.
+2020-01-16 : 6 positive tweets | 2 negative tweets | 5 neutral tweets.
+2020-01-17 : 8 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-01-18 : 2 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-01-20 : 4 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-01-21 : 5 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-01-22 : 8 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-01-23 : 5 positive tweets | 3 negative tweets | 5 neutral tweets.
+2020-01-24 : 9 positive tweets | 2 negative tweets | 7 neutral tweets.
+2020-01-25 : 2 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-01-27 : 11 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-01-28 : 7 positive tweets | 3 negative tweets | 12 neutral tweets.
+2020-01-29 : 5 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-01-30 : 6 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-01-31 : 7 positive tweets | 5 negative tweets | 8 neutral tweets.
+2020-02-01 : 4 positive tweets | 3 negative tweets | 0 neutral tweets.
+2020-02-02 : 5 positive tweets | 2 negative tweets | 2 neutral tweets.
+2020-02-03 : 5 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-02-04 : 5 positive tweets | 5 negative tweets | 8 neutral tweets.
+2020-02-05 : 9 positive tweets | 0 negative tweets | 3 neutral tweets.
+2020-02-06 : 5 positive tweets | 3 negative tweets | 6 neutral tweets.
+2020-02-07 : 12 positive tweets | 3 negative tweets | 0 neutral tweets.
+2020-02-08 : 0 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-02-10 : 6 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-02-11 : 6 positive tweets | 2 negative tweets | 6 neutral tweets.
+2020-02-12 : 7 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-02-13 : 5 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-02-14 : 5 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-02-15 : 0 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-02-16 : 0 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-02-17 : 0 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-02-18 : 4 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-02-19 : 4 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-02-20 : 2 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-02-21 : 7 positive tweets | 3 negative tweets | 7 neutral tweets.
+2020-02-22 : 3 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-02-23 : 2 positive tweets | 2 negative tweets | 0 neutral tweets.
+2020-02-24 : 4 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-02-25 : 10 positive tweets | 4 negative tweets | 6 neutral tweets.
+2020-02-26 : 5 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-02-27 : 3 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-02-28 : 6 positive tweets | 2 negative tweets | 9 neutral tweets.
+2020-02-29 : 4 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-03-01 : 2 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-03-02 : 4 positive tweets | 0 negative tweets | 3 neutral tweets.
+2020-03-03 : 5 positive tweets | 3 negative tweets | 6 neutral tweets.
+2020-03-04 : 3 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-03-05 : 4 positive tweets | 4 negative tweets | 7 neutral tweets.
+2020-03-06 : 0 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-03-07 : 4 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-03-08 : 3 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-03-09 : 7 positive tweets | 4 negative tweets | 6 neutral tweets.
+2020-03-10 : 2 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-03-11 : 5 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-03-12 : 5 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-03-13 : 8 positive tweets | 5 negative tweets | 7 neutral tweets.
+2020-03-14 : 6 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-03-15 : 2 positive tweets | 2 negative tweets | 2 neutral tweets.
+2020-03-16 : 2 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-03-17 : 5 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-03-18 : 4 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-03-19 : 4 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-03-20 : 4 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-03-21 : 3 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-03-22 : 5 positive tweets | 0 negative tweets | 0 neutral tweets.
+2020-03-23 : 5 positive tweets | 0 negative tweets | 5 neutral tweets.
+2020-03-24 : 5 positive tweets | 0 negative tweets | 2 neutral tweets.
+2020-03-25 : 6 positive tweets | 0 negative tweets | 7 neutral tweets.
+2020-03-26 : 4 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-03-27 : 2 positive tweets | 2 negative tweets | 8 neutral tweets.
+2020-03-28 : 6 positive tweets | 3 negative tweets | 6 neutral tweets.
+2020-03-29 : 4 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-03-30 : 8 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-03-31 : 5 positive tweets | 2 negative tweets | 2 neutral tweets.
+2020-04-01 : 7 positive tweets | 3 negative tweets | 4 neutral tweets.
+2020-04-02 : 4 positive tweets | 0 negative tweets | 4 neutral tweets.
+2020-04-03 : 8 positive tweets | 7 negative tweets | 0 neutral tweets.
+2020-04-04 : 6 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-04-05 : 2 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-04-06 : 4 positive tweets | 2 negative tweets | 5 neutral tweets.
+2020-04-07 : 5 positive tweets | 2 negative tweets | 5 neutral tweets.
+2020-04-08 : 6 positive tweets | 3 negative tweets | 2 neutral tweets.
+2020-04-09 : 8 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-04-10 : 5 positive tweets | 3 negative tweets | 6 neutral tweets.
+2020-04-11 : 2 positive tweets | 0 negative tweets | 5 neutral tweets.
+2020-04-12 : 3 positive tweets | 2 negative tweets | 2 neutral tweets.
+2020-04-13 : 3 positive tweets | 2 negative tweets | 7 neutral tweets.
+2020-04-14 : 5 positive tweets | 2 negative tweets | 6 neutral tweets.
+2020-04-15 : 6 positive tweets | 2 negative tweets | 6 neutral tweets.
+2020-04-16 : 7 positive tweets | 4 negative tweets | 8 neutral tweets.
+2020-04-17 : 3 positive tweets | 3 negative tweets | 5 neutral tweets.
+2020-04-18 : 4 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-04-19 : 0 positive tweets | 3 negative tweets | 0 neutral tweets.
+2020-04-20 : 5 positive tweets | 2 negative tweets | 3 neutral tweets.
+2020-04-21 : 4 positive tweets | 2 negative tweets | 4 neutral tweets.
+2020-04-22 : 5 positive tweets | 3 negative tweets | 5 neutral tweets.
+2020-04-23 : 4 positive tweets | 2 negative tweets | 6 neutral tweets.
+2020-04-24 : 4 positive tweets | 3 negative tweets | 3 neutral tweets.
+2020-04-25 : 0 positive tweets | 0 negative tweets | 4 neutral tweets.
+--------
