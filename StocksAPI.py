@@ -11,7 +11,7 @@ import time
 import numpy as np 
 import matplotlib.ticker as ticker
 
-baseURL = "https://cloud.iexapis.com/"
+
 
 def getCompanyInfo(symbols):
     stock_batch = Stock(symbols,
@@ -27,6 +27,7 @@ def getHistoricalPrices(stock, start, end):
 start = datetime(2019, 11, 15)
 end = datetime(2020, 4, 17)
 
+#Connecting to Database
 path = os.path.dirname(os.path.abspath(__file__))
 conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
@@ -71,6 +72,70 @@ def nasdaq(cur = cur, conn = conn):
 n = nasdaq()
 d, p = zip(*n)
 
+#Calculating NASDAQ Average Stock Monthly Price
+nov = []
+dec = []
+jan = []
+feb = []
+march = []
+april = []
+
+total = nasdaq()
+
+for date in total:
+    if '2019-11' in date[0]:
+        nov.append(date)
+    elif '2019-12' in date[0]:
+        dec.append(date)
+    elif '2020-01' in date[0]:
+        jan.append(date)
+    elif '2020-02' in date[0]:
+        feb.append(date)
+    elif '2020-03' in date[0]:
+        march.append(date)
+    elif '2020-04' in date[0]:
+        april.append(date)
+    else:
+        print('error with: ')
+        print(date)
+
+def monthlyNstock(month_list):
+    total = 0
+    date, price = zip(*month_list)
+    for p in price:
+        total += int(p)
+    avg = total/(len(price))
+    return avg
+
+#Writes monthly average out to text file
+with open ("NASDAQ_Monthly_Avg.txt", 'w') as output:
+    output.write("Monthly Average" + "\n")
+    np = monthlyNstock(nov)
+    nd = monthlyNstock(dec)
+    nj = monthlyNstock(jan)
+    nf = monthlyNstock(feb)
+    nm = monthlyNstock(march)
+    na = monthlyNstock(april)
+    st1 = f"The monthly average stock price for November was ${np}."
+    st2 = f"The monthly average stock price for December was ${nd}."
+    st3 = f"The monthly average stock price for January was ${nj}."
+    st4 = f"The monthly average stock price for February was ${nf}."
+    st5 = f"The monthly average stock price for March was ${nm}."
+    st6 = f"The monthly average stock price for April was ${na}."
+    sts = []
+    sts.append(st1)
+    sts.append(st2)
+    sts.append(st3)
+    sts.append(st4)
+    sts.append(st5)
+    sts.append(st6)
+    for st in sts:
+        output.write(str(st) + "\n")
+
+
+
+
+
 #Visualization for Nasdaq Stock Prices
 fig = plt.figure(figsize=(10,5))
 ax = fig.add_subplot(111)
@@ -93,7 +158,7 @@ for date in n:
 
 nasdate_2020, nasprice_2020 = zip(*nasdaq_2020)
 
-#____________________________________________________________________________________________
+#_______________________________________________________________________________________________________________________________________________________________________
 
 #Collecting Gasprice Data from Database
 cur.execute(
