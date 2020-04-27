@@ -277,6 +277,9 @@ tweets = tweets[::-1]
 # print(len(list_dates))
 # print(len(tweets))
 
+avg_list = avg_list[-21:]
+date_list = date_list[-21:]
+
 #tweet count vs oil stock visualization
 plt.figure(1)
 tweet_ax = plt.subplot(1,2,1)
