@@ -143,18 +143,17 @@ for tweet in covid_tweet_count:
 
 # to reverse the dates
 def reverse(lst): 
-    new_lst = lst[::-1] 
-    return new_lst
+    rev = lst[::-1] 
+    return rev
 
-# calculating the average number of coronavirus-related tweets released by the CDC each week
-new = list(zip(reverse(total_dates), tweet_count))
+dates_tweets = list(zip(reverse(total_dates), tweet_count))
 
 #dividing the list of dates into groups of 7 (equivalent to one week) startign with December 1, which is a Sunday
-def divide_chunks(lst, group): 
+def creating_weeks(lst, group): 
     for i in range(0, len(lst), group):  
-        yield new[i:i + group] 
-n = 7
-weeks_list = list(divide_chunks(new, n)) 
+        yield dates_tweets[i:i + group] 
+days = 7
+weeks_list = list(creating_weeks(dates_tweets, days)) 
 
 #creating a dictionary of all of the weeks and their average number of covid-related tweets that week
 def tweets_per_week(lst):
@@ -223,8 +222,8 @@ for tweet in tweet_sentiment:
         neutral_tweet_count[date] += 1
 
 # to remove duplicates from dates
-def remove_duplicates(lst):
-    return list(dict.fromkeys(lst))
+def remove_duplicates(dates_lst):
+    return list(dict.fromkeys(dates_lst))
 
 #organizing the data into lists to insert into table
 pos_tweets = []
