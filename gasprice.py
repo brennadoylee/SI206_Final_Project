@@ -68,119 +68,128 @@ conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
 #create east coast table
-cur.execute("DROP TABLE IF EXISTS EastCoastPricing")
-cur.execute("CREATE TABLE IF NOT EXISTS EastCoastPricing (Date VARCHAR(9) PRIMARY KEY, EastCoastPrice BOOL)")
+def eastcoast_table():
+	cur.execute("DROP TABLE IF EXISTS EastCoastPricing")
+	cur.execute("CREATE TABLE IF NOT EXISTS EastCoastPricing (Date VARCHAR(9) PRIMARY KEY, EastCoastPrice BOOL)")
 
-count1 = 0
-base_url = get_url('PET.WG4ST_R10_1.W')
-area_info = get_info(base_url)
-for i in area_info['series'][0]['data'][0:100]:
-	date = i[0]
-	newdate = date[0:4] + "-" + date[4:6] + "-" + date[-2:]
-	pr = i[1]
-	count1 += 1
-	if count1 % 20 == 0:
-		print("Pausing")
-		time.sleep(1)
-		print("Ok")
-	cur.execute("INSERT INTO EastCoastPricing (Date, EastCoastPrice) VALUES (?,?)", (newdate, pr))
-	conn.commit()
-print("Finished adding East Coast data to database")
+	count1 = 0
+	base_url = get_url('PET.WG4ST_R10_1.W')
+	area_info = get_info(base_url)
+	for i in area_info['series'][0]['data'][0:100]:
+		date = i[0]
+		newdate = date[0:4] + "-" + date[4:6] + "-" + date[-2:]
+		pr = i[1]
+		count1 += 1
+		if count1 % 20 == 0:
+			print("Pausing")
+			time.sleep(1)
+			print("Ok")
+		cur.execute("INSERT INTO EastCoastPricing (Date, EastCoastPrice) VALUES (?,?)", (newdate, pr))
+		conn.commit()
+	print("Finished adding East Coast data to database")
 
 #create Gulf Coast Table
-cur.execute("DROP TABLE IF EXISTS GulfCoastPricing")
-cur.execute("CREATE TABLE IF NOT EXISTS GulfCoastPricing (Date VARCHAR(9) PRIMARY KEY, GulfCoastPrice BOOL)")
-
-base_url2 = get_url('PET.WG4ST_R30_1.W')
-area_info2 = get_info(base_url2)
-for a in area_info2['series'][0]['data'][0:100]:
-	date2 = a[0]
-	newdate2 = date2[0:4] + "-" + date2[4:6] + "-" + date2[-2:]
-	pr2 = a[1]
-	count1 += 1
-	if count1 % 20 == 0:
-		print("Pausing")
-		time.sleep(1)
-		print("Ok")
-	cur.execute("INSERT INTO GulfCoastPricing (Date, GulfCoastPrice) VALUES (?,?)", (newdate2, pr2))
-	conn.commit()
-print("Finished adding Gulf Coast data to database")	
+def gulfcoast_table():
+	cur.execute("DROP TABLE IF EXISTS GulfCoastPricing")
+	cur.execute("CREATE TABLE IF NOT EXISTS GulfCoastPricing (Date VARCHAR(9) PRIMARY KEY, GulfCoastPrice BOOL)")
+	count1 = 0
+	base_url2 = get_url('PET.WG4ST_R30_1.W')
+	area_info2 = get_info(base_url2)
+	for a in area_info2['series'][0]['data'][0:100]:
+		date2 = a[0]
+		newdate2 = date2[0:4] + "-" + date2[4:6] + "-" + date2[-2:]
+		pr2 = a[1]
+		count1 += 1
+		if count1 % 20 == 0:
+			print("Pausing")
+			time.sleep(1)
+			print("Ok")
+		cur.execute("INSERT INTO GulfCoastPricing (Date, GulfCoastPrice) VALUES (?,?)", (newdate2, pr2))
+		conn.commit()
+	print("Finished adding Gulf Coast data to database")	
+gulfcoast_table()
 
 #create Midwest Table
-cur.execute("DROP TABLE IF EXISTS MidwestPricing")
-cur.execute("CREATE TABLE IF NOT EXISTS MidwestPricing (Date VARCHAR(9) PRIMARY KEY, MidwestPrice BOOL)")
-
-base_url3 = get_url('PET.WG4ST_R20_1.W')
-area_info3 = get_info(base_url3)
-for b in area_info3['series'][0]['data'][0:100]:
-	date3 = b[0]
-	newdate3 = date3[0:4] + "-" + date3[4:6] + "-" + date3[-2:]
-	pr3 = b[1]
-	count1 += 1
-	if count1 % 20 == 0:
-		print("Pausing")
-		time.sleep(1)
-		print("Ok")
-	cur.execute("INSERT INTO MidwestPricing (Date, MidwestPrice) VALUES (?,?)", (newdate3, pr3))
-	conn.commit()
-print("Finished adding Midwest data to database")
+def midwest_table():
+	cur.execute("DROP TABLE IF EXISTS MidwestPricing")
+	cur.execute("CREATE TABLE IF NOT EXISTS MidwestPricing (Date VARCHAR(9) PRIMARY KEY, MidwestPrice BOOL)")
+	count1 = 0
+	base_url3 = get_url('PET.WG4ST_R20_1.W')
+	area_info3 = get_info(base_url3)
+	for b in area_info3['series'][0]['data'][0:100]:
+		date3 = b[0]
+		newdate3 = date3[0:4] + "-" + date3[4:6] + "-" + date3[-2:]
+		pr3 = b[1]
+		count1 += 1
+		if count1 % 20 == 0:
+			print("Pausing")
+			time.sleep(1)
+			print("Ok")
+		cur.execute("INSERT INTO MidwestPricing (Date, MidwestPrice) VALUES (?,?)", (newdate3, pr3))
+		conn.commit()
+	print("Finished adding Midwest data to database")
+midwest_table()
 
 #create Rocky Mountain table
-cur.execute("DROP TABLE IF EXISTS RockyMountainPricing")
-cur.execute("CREATE TABLE IF NOT EXISTS RockyMountainPricing (Date VARCHAR(9) PRIMARY KEY, RockyMountainPrice BOOL)")
-
-base_url4 = get_url('PET.WG4ST_R40_1.W')
-area_info4 = get_info(base_url4)
-for c in area_info4['series'][0]['data'][0:100]:
-	date4 = c[0]
-	newdate4 = date4[0:4] + "-" + date4[4:6] + "-" + date4[-2:]
-	pr4 = c[1]
-	count1 += 1
-	if count1 % 20 == 0:
-		print("Pausing")
-		time.sleep(1)
-		print("Ok")
-	cur.execute("INSERT INTO RockyMountainPricing (Date, RockyMountainPrice) VALUES (?,?)", (newdate4, pr4))
-	conn.commit()
-#print(cur.fetchall())
-print("Finished adding Rocky Mountain data to database")
+def rockymountain_table():
+	cur.execute("DROP TABLE IF EXISTS RockyMountainPricing")
+	cur.execute("CREATE TABLE IF NOT EXISTS RockyMountainPricing (Date VARCHAR(9) PRIMARY KEY, RockyMountainPrice BOOL)")
+	count1 = 0
+	base_url4 = get_url('PET.WG4ST_R40_1.W')
+	area_info4 = get_info(base_url4)
+	for c in area_info4['series'][0]['data'][0:100]:
+		date4 = c[0]
+		newdate4 = date4[0:4] + "-" + date4[4:6] + "-" + date4[-2:]
+		pr4 = c[1]
+		count1 += 1
+		if count1 % 20 == 0:
+			print("Pausing")
+			time.sleep(1)
+			print("Ok")
+		cur.execute("INSERT INTO RockyMountainPricing (Date, RockyMountainPrice) VALUES (?,?)", (newdate4, pr4))
+		conn.commit()
+	print("Finished adding Rocky Mountain data to database")
+rockymountain_table()
 
 #create West Coast table
-cur.execute("DROP TABLE IF EXISTS WestCoastPricing")
-cur.execute("CREATE TABLE IF NOT EXISTS WestCoastPricing (Date VARCHAR(9) PRIMARY KEY, WestCoastPrice BOOL)")
+def westcoast_table():
+	cur.execute("DROP TABLE IF EXISTS WestCoastPricing")
+	cur.execute("CREATE TABLE IF NOT EXISTS WestCoastPricing (Date VARCHAR(9) PRIMARY KEY, WestCoastPrice BOOL)")
+	count1 = 0
+	base_url5 = get_url("PET.WG4ST_R50_1.W")
+	area_info5 = get_info(base_url5)
+	for d in area_info5['series'][0]['data'][0:100]:
+		date5 = d[0]
+		newdate5 = date5[0:4] + "-" + date5[4:6] + "-" + date5[-2:]
+		pr5 = d[1]
+		count1 += 1
+		if count1 % 20 == 0:
+			print("Pausing")
+			time.sleep(1)
+			print("Ok")
+		cur.execute("INSERT INTO WestCoastPricing (Date, WestCoastPrice) VALUES (?,?)", (newdate5, pr5))
+		conn.commit()
+	print("Finished adding West Coast data to database")
+westcoast_table()
 
-base_url5 = get_url("PET.WG4ST_R50_1.W")
-area_info5 = get_info(base_url5)
-for d in area_info5['series'][0]['data'][0:100]:
-	date5 = d[0]
-	newdate5 = date5[0:4] + "-" + date5[4:6] + "-" + date5[-2:]
-	pr5 = d[1]
-	count1 += 1
-	if count1 % 20 == 0:
-		print("Pausing")
-		time.sleep(1)
-		print("Ok")
-	cur.execute("INSERT INTO WestCoastPricing (Date, WestCoastPrice) VALUES (?,?)", (newdate5, pr5))
-	conn.commit()
-print("Finished adding West Coast data to database")
 #=============================================================================================================================================================================================================================================================================================================================================================
-
-cur.execute(
-	'''
-	SELECT EastCoastPricing.Date, EastCoastPricing.EastCoastPrice, GulfCoastPricing.GulfCoastPrice, MidwestPricing.MidwestPrice, RockyMountainPricing.RockyMountainPrice, WestCoastPricing.WestCoastPrice
-	FROM ((((EastCoastPricing
-	INNER JOIN  GulfCoastPricing ON EastCoastPricing.Date=GulfCoastPricing.Date)
-	INNER JOIN MidwestPricing ON EastCoastPricing.Date=MidwestPricing.Date)
-	INNER JOIN RockyMountainPricing ON EastCoastPricing.Date=RockyMountainPricing.Date)
-	INNER JOIN WestCoastPricing ON EastCoastPricing.Date=WestCoastPricing.Date);
-	'''
-)
-
+def join_tables():
+	cur.execute(
+		'''
+		SELECT EastCoastPricing.Date, EastCoastPricing.EastCoastPrice, GulfCoastPricing.GulfCoastPrice, MidwestPricing.MidwestPrice, RockyMountainPricing.RockyMountainPrice, WestCoastPricing.WestCoastPrice
+		FROM ((((EastCoastPricing
+		INNER JOIN  GulfCoastPricing ON EastCoastPricing.Date=GulfCoastPricing.Date)
+		INNER JOIN MidwestPricing ON EastCoastPricing.Date=MidwestPricing.Date)
+		INNER JOIN RockyMountainPricing ON EastCoastPricing.Date=RockyMountainPricing.Date)
+		INNER JOIN WestCoastPricing ON EastCoastPricing.Date=WestCoastPricing.Date);
+		'''
+	)
+	conn.commit()
+join_tables()
 # =================================================================================================================================================================================================================
-
+#get list of each price from each area per week
 r = cur.fetchall()
 
-#get list of each price from each area per week
 ec_list = []
 gc_list = []
 m_list = []
@@ -202,10 +211,10 @@ gulfcoast_list = gc_list[::-1]
 midwest_list = m_list[::-1]
 rockymountain_list = rm_list[::-1]
 westcoast_list = wc_list[::-1]
-print(len(eastcoast_list), len(gulfcoast_list), len(midwest_list), len(rockymountain_list), len(westcoast_list))
+
+
 
 #find averages of each week from joined 
-print(r)
 d_list = []
 average_list = []
 for x in r:
@@ -214,6 +223,7 @@ for x in r:
 	average_list.append(avg)
 date_list = (d_list[::-1])
 avg_list = (average_list[::-1])
+
 #=============================================================================================================================================================================================================================================================================================================================================================
 
 #create visualization of multiple line lineplot for each area
@@ -236,7 +246,7 @@ fig.savefig("AreaOilPriceWeekly.png")
 plt.show()
 
 # =======================================================================================================
-#create visualization
+#create visualization of average gas price line plot
 
 fig, ax = plt.subplots()
 ax.plot(date_list, avg_list)
@@ -249,3 +259,21 @@ ax.grid()
 
 fig.savefig("AverageOilPriceWeekly.png")
 plt.show()
+# =======================================================================================================
+#get tweet sentiment analysis
+cur.execute("SELECT * FROM TotalTweets")
+t = cur.fetchall()
+info_list = [list(elem) for elem in t]
+#print(info_list)
+list_dates = []
+tweets = []
+for i in info_list:
+	date = i[0]
+	twe = i[1]
+	list_dates.append(date)
+	tweets.append(twe)
+print(len(list_dates))
+print(len(tweets))
+
+# for i in info_list:
+# 	date = 
