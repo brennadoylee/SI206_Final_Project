@@ -1,7 +1,6 @@
 import tweepy
 import datetime
 from textblob import TextBlob
-import csv
 import matplotlib.pyplot as plt
 import json
 import sqlite3
