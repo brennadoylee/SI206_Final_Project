@@ -133,9 +133,7 @@ with open ("NASDAQ_Monthly_Avg.txt", 'w') as output:
     for st in sts:
         output.write(str(st) + "\n")
 
-
-
-
+#_______________________________________________________________________________________________________________________________________________________________________
 
 #Visualization for Nasdaq Stock Prices
 fig = plt.figure(figsize=(10,5))
@@ -151,13 +149,6 @@ fig.savefig('NASDAQClosingPrice.png')
 plt.show()
 
 
-#Collecting NASDAQ prices for 2020 only
-nasdaq_2020 = []
-for date in n:
-    if '2020' in date[0]:
-        nasdaq_2020.append(date)
-
-nasdate_2020, nasprice_2020 = zip(*nasdaq_2020)
 
 #_______________________________________________________________________________________________________________________________________________________________________
 
@@ -223,7 +214,15 @@ for date, price in combined_list:
         gasdate_2020.append(date)
         gasprice_2020.append(price)
 
+#Collecting NASDAQ prices for 2020 only
+nasdaq_2020 = []
+for date in n:
+    if '2020' in date[0]:
+        nasdaq_2020.append(date)
 
+nasdate_2020, nasprice_2020 = zip(*nasdaq_2020)
+
+#======================================================================================================================
 #Joint Visualization between Gas Stock Prices and Nasdaq Stock Prices in 2020
 plt.figure(1)
 ax1 = plt.subplot(1, 2, 1)
