@@ -62,16 +62,12 @@ def get_all_tweets(screen_name):
     all_tweets = [[str(tweet.id_str), str(tweet.created_at.date()), str(tweet_analysis(str(tweet.text.encode("utf-8")))), str(tweet.text.encode("utf-8"))] for tweet in tweets]
     return all_tweets
 
-# to reverse the dates
-def reverse(lst): 
-    new_lst = lst[::-1] 
-    return new_lst
 
 # calling get_all_tweets to get all of the data to insert into tables
 all_tweets = get_all_tweets(screenname)
 
 
-#------------------------- EXPORTING DATA TO SQLITE DATABASE ----------------------
+#-------------------------------------------- EXPORTING DATA TO SQLITE DATABASE --------------------------------------------
 
 # setting up database
 path = os.path.dirname(os.path.abspath(__file__))
@@ -89,9 +85,9 @@ for tweet in all_tweets:
         count += 1
         cur.execute("INSERT OR IGNORE INTO TweetSentiment VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
         conn.commit()
-        if count % 10 == 0:
+        if count % 20 == 0:
             print('Pausing for a bit...')
-            time.sleep(5)
+            time.sleep(1)
 
 print("------")
 
@@ -114,12 +110,23 @@ for tweet in all_tweets:
 for key in corona_tweet_count:
     cur.execute("INSERT OR IGNORE INTO TotalTweets VALUES (?, ?)", (key, corona_tweet_count[key]))
     conn.commit()
-    if count % 10 == 0:
+    if count % 20 == 0:
         print('Pausing for a bit...')
-        time.sleep(5)
+        time.sleep(1)
 '''
 
-# -------------- PULLING DATA / CREATING MATPLOTLIB GRAPHS --------------------
+
+# -------------------------------------------- PULLING DATA / CREATING MATPLOTLIB GRAPHS-------------------------------------
+
+
+
+
+#  --- Visualization 1 --- Number of Tweets the CDC has Released containing the word 'COVID' or 'Coronavirus' since Deceber 1, 2019 Visualization (total_covid_tweets)
+
+''' TotalTweets Table Calculation: using the TweetTotal data to calculate average number of tweets
+released by the CDC each week and organizing the data into seperate lists. 
+For the graph, I am using the corona_tweet_count data straight from the table to visualize how many times a
+day the CDC Posted about COVID or Corona every day since December 1, 2019'''
 
 # pulling the date and corona_tweet_count from the TotalTweets data
 def covid_tweet_count(cur = cur, conn = conn):
@@ -127,14 +134,42 @@ def covid_tweet_count(cur = cur, conn = conn):
      data = cur.fetchall()
      return data
 
-# calling hte function and organizing the data
+# calling the function and organizing the data
 covid_tweet_count = covid_tweet_count(cur = cur, conn = conn)
 total_dates = []
 tweet_count = []
 for tweet in covid_tweet_count:
     total_dates.append(tweet[0])
     tweet_count.append(tweet[1])
-    
+
+# to reverse the dates
+def reverse(lst): 
+    new_lst = lst[::-1] 
+    return new_lst
+
+# calculating the average number of coronavirus-related tweets released by the CDC each week
+new = list(zip(reverse(total_dates), tweet_count))
+
+#dividing the list of dates into groups of 7 (equivalent to one week) startign with December 1, which is a Sunday
+def divide_chunks(lst, group): 
+    for i in range(0, len(lst), group):  
+        yield new[i:i + group] 
+n = 7
+weeks_list = list(divide_chunks(new, n)) 
+
+#creating a dictionary of all of the weeks and their total number of tweets that week
+def tweets_per_week(lst):
+    week_count = {}
+    count = 0
+    n = 1
+    for week in lst:
+        for tup in week:
+             count += tup[1]
+        week_count["Week " + str(n)] = count / 7  # divided by 7 to get the average number of tweets for the week
+        n+=1
+    return week_count
+week_tweet_averages = tweets_per_week(weeks_list)
+
 
 # creating a graph of the number of Covid related tweets per day from the TotalTweet Data
 fig = plt.figure(figsize = (10,5))
@@ -149,13 +184,23 @@ ax.grid()
 fig.savefig("total_tweets.png")
 plt.show()
 
-# pulling the dates and sentiments from the TweetSentiment table
+
+
+#  --- Visualization 2 --- Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'Coronavirus' released by the CDC since December 1, 2019 (tweet_sentiment_analysis)
+
+'''TweetSentiment Table Calculation: using the TweetSentiment data to calculate the number of 
+Positive, Negative, and Neutral Tweets the CDC Tweets on each day
+organizing the counts into seperate lists for easy insertion into 
+Tweet_Sentiment_Analysis graph as the depenent variable. The table will visualize how many times a
+day the CDC posted a positive, negative, or Nnutral tweet about COVID or Corona every day since December 1, 2019'''
+
+# pulling the dates and sentiments from the TweetSentiment table 
 def tweet_sentiment(cur = cur, conn = conn):
     cur.execute('SELECT date, sentiment FROM TweetSentiment')
     data = cur.fetchall()
     return data
 
-# calling the function and getting the number of same sentiment analyisis of all covid related tweets
+# calculating the number of pos, neg, and neutral tweets per each day and putting it into dictionaries
 pos_tweet_count = {}
 neg_tweet_count = {}
 neutral_tweet_count = {}
@@ -178,14 +223,16 @@ for tweet in tweet_sentiment:
             neutral_tweet_count[date] = 1
         neutral_tweet_count[date] += 1
 
-#organizing the counts into lists
+# to remove duplicates from dates
+def remove_duplicates(lst):
+    return list(dict.fromkeys(lst))
+
+#organizing the data into lists to insert into table
 pos_tweets = []
 pos_dates = []
-
 for key in pos_tweet_count:
     pos_tweets.append(pos_tweet_count[key])
     pos_dates.append(key)
-
 
 neg_tweets = []
 for key in neg_tweet_count:
@@ -195,7 +242,37 @@ neutral_tweets = []
 for key in neutral_tweet_count:
     neutral_tweets.append(neutral_tweet_count[key])
 
-#creating a graph of the sentiment analysis of the cvid related tweets per day from the TweetSentiment table
+final_dates = remove_duplicates(reverse(dates))
+# writing all of the calculations into a txt file 
+with open("CDC_Twitter_Calculations.txt", "w") as output:
+    output.write("The Average Number of Coronavirus-Related Tweets Posted by the CDC Each Week Starting with the Week of 12/1/2019 - 12/7/2019.\n")
+    output.write("----------------------------------------------------------------------------------------------------------------------------\n")    
+    for week in week_tweet_averages:
+        count = week_tweet_averages[week]
+        text = "During {}, the CDC released an average of {} coronavirus-related tweets.".format(week,count)
+        output.write(str(text) + "\n")
+    output.write("--------\n")
+    output.write("The Sentiment Analysis -- Positive, Negative, and Neutral -- of Coronavirus-Related Tweets Posted by the CDC per Day.\n")
+    output.write("----------------------------------------------------------------------------------------------------------------------------\n")
+    for date in final_dates:
+        try:
+            pos = str(pos_tweet_count[date])
+        except KeyError:
+            pos = str(0)
+        try:
+            neg = str(neg_tweet_count[date])
+        except KeyError:
+            neg = str(0)
+        try:
+            neut = str(neutral_tweet_count[date])
+        except KeyError:
+            neut = str(0)
+        text2 = "{} : {} positive tweets | {} negative tweets | {} neutral tweets.".format(date, pos, neg, neut)
+        output.write(str(text2) + "\n")
+    output.write("--------")
+output.close()
+
+#creating a graph of the sentiment analysis of the covid related tweets per day from the TweetSentiment table using matplotlib
 fig = plt.figure(figsize = (10,5))
 ax = fig.add_subplot(111)
 ax.plot(reverse(pos_dates), pos_tweets, color = "green", label = "positive")
@@ -211,7 +288,13 @@ ax.legend()
 fig.savefig("setiment_analysis.png")
 plt.show()
 
-# -------------------------- Joint Visualization between CDC Tweets about COVID19 and Nasdaq Stock Prices in Since December 1, 2019 --------------------
+
+
+
+# --- Visualization 3 --- Joint Visualization between CDC Tweets about COVID19 and Nasdaq Stock Prices in Since December 1, 2019 
+'''Pulling data from the Nasdaq and TotalTweets tables to show the correlation between the 
+Nasdaq prices and number of tweets released by the CDC regarding COVID or coronavirus 
+everyday since December 1, 2019'''
 
 # pulling and organizing the data
 def nasdaq_data(cur = cur, conn = conn):

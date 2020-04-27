@@ -217,12 +217,25 @@ westcoast_list = wc_list[::-1]
 #find averages of each week from joined 
 d_list = []
 average_list = []
+tup_list = []
 for x in r:
 	avg = (x[1] + x[2] + x[3] + x[4] + x[5])/5
 	d_list.append(x[0])
 	average_list.append(avg)
+	tup = (x[0], avg)
+	tup_list.append(tup)
 date_list = (d_list[::-1])
 avg_list = (average_list[::-1])
+
+
+#writes average from joined out to text file
+with open("Oil_Averages.txt", "w") as output:
+	output.write("Week, Average Conventional Motor Oil Stock Price in U.S.\n")
+	for t in tup_list:
+		d = str(t[0])
+		p = str(t[1])
+		st = f"The week of {d} the average conventional motor oil stock price was ${p}"
+		output.write(str(st) + "\n")
 
 #=============================================================================================================================================================================================================================================================================================================================================================
 
@@ -234,7 +247,7 @@ ax.plot(date_list, midwest_list, "-y", label = "Midwest")
 ax.plot(date_list, rockymountain_list, "-b", label = "Rocky Mountains")
 ax.plot(date_list, westcoast_list, "-g", label = "West Coast")
 ax.legend(loc = "upper left")
-plt.xticks(fontsize = 8, rotation = 45)
+plt.xticks(fontsize = 5, rotation = 45)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Date")
 ax.set_ylabel("Ending Stock of Conventional Motor Gasoline (Dollars) Per Week")
@@ -250,7 +263,7 @@ plt.show()
 
 fig, ax = plt.subplots()
 ax.plot(date_list, avg_list)
-plt.xticks(fontsize = 8, rotation = 45)
+plt.xticks(fontsize = 5, rotation = 45)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Date")
 ax.set_ylabel("Average Ending Stock of Conventional Motor Gasoline (Dollars)")
@@ -287,14 +300,14 @@ tweet_ax.plot(list_dates, tweets, color = "cyan")
 plt.suptitle("CDC Tweet Count vs Average Ending Stock of Conventional Motor Gasoline")
 plt.ylabel("Tweet Counts CDC Has Released Containing Word COVID or Coronavirus")
 plt.xlabel("Date")
-plt.xticks(fontsize = 8, rotation = 45)
+plt.xticks(fontsize = 5, rotation = 45)
 tweet_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 
 oil_ax = plt.subplot(1, 2, 2)
 plt.plot(date_list, avg_list, color = "magenta")
 plt.xlabel('Date')
 plt.ylabel('Average Ending Stock of Conventional Motor Gasoline (Dollars)')
-plt.xticks(fontsize = 8, rotation = 45)
+plt.xticks(fontsize = 5, rotation = 45)
 oil_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 
 fig.savefig("TweetCountvsOilStocks")
