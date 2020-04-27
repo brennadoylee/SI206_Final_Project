@@ -9,7 +9,7 @@ import time
 import numpy as np
 import matplotlib.ticker as ticker
 
-
+# setting up authentication for twitter api data extraction
 consumer_key='SVaUMV92pJosw7f95Fdif2Eqi'
 consumer_secret='fTVKKnHpsA5WbCZanXFfyxbKh0QDDsjM7ZZpYv1jIhP0IzrhUE'
 access_token='2249378049-VGOJPkBMvlaAb3m7xpySNoAIITwW274TucQq72x'
