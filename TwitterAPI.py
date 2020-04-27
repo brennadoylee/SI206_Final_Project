@@ -85,14 +85,14 @@ for tweet in all_tweets:
         count += 1
         cur.execute("INSERT OR IGNORE INTO TweetSentiment VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
         conn.commit()
-        if count % 10 == 0:
+        if count % 20 == 0:
             print('Pausing for a bit...')
-            time.sleep(5)
+            time.sleep(1)
 
 print("------")
 
 #creating a table counting how many time the word covid was tweeted each day
-count = 0
+count2 = 0
 cur.execute("DROP TABLE IF EXISTS TotalTweets")
 cur.execute("CREATE TABLE IF NOT EXISTS TotalTweets(date TEXT PRIMARY KEY, corona_tweet_count INTEGER)")
 conn.commit()
@@ -108,11 +108,12 @@ for tweet in all_tweets:
             corona_tweet_count[date] += 1
 
 for key in corona_tweet_count:
+    count2 += 1
     cur.execute("INSERT OR IGNORE INTO TotalTweets VALUES (?, ?)", (key, corona_tweet_count[key]))
     conn.commit()
-    if count % 10 == 0:
+    if count2 % 20 == 0:
         print('Pausing for a bit...')
-        time.sleep(5)
+        time.sleep(1)
 
 
 # -------------------------------------------- PULLING DATA / CREATING MATPLOTLIB GRAPHS-------------------------------------
