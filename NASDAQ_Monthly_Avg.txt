@@ -1,0 +1,7 @@
+Monthly Average
+The monthly average stock price for November was $104.1.
+The monthly average stock price for December was $105.33333333333333.
+The monthly average stock price for January was $108.9047619047619.
+The monthly average stock price for February was $113.6842105263158.
+The monthly average stock price for March was $95.86363636363636.
+The monthly average stock price for April was $102.25.
