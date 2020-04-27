@@ -20,7 +20,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
-
+# using TextBlob module to assign a sentiment analysis to each tweet passed through
 def tweet_analysis(tweet): 
     analysis = TextBlob(tweet)        
     if analysis.sentiment[0]>0:       
@@ -31,6 +31,7 @@ def tweet_analysis(tweet):
         result = 'Neutral'
     return result
 
+# pulling all tweets from the cdc twitter and extracting information about each one
 def get_all_tweets(screen_name):
     startDate = datetime.datetime(2019, 12, 1, 0, 0, 0)
     endDate =   datetime.datetime(2020, 4, 26, 0, 0, 0)
