@@ -32,7 +32,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
-'''
+
 #Collecting Information for Nasdaq Stock
 count = 0
 historicalPrices = getHistoricalPrices('NDAQ', start, end)
@@ -48,7 +48,7 @@ for d in historicalPrices:
         print('Pausing for a bit...')
         time.sleep(5)
 
-'''
+
 #Retrieve NASDAQ stock price by a certain day
 def Ndate(year = 2020, month = 4, day = 1):
     if len(str(month)) == 1:
@@ -99,6 +99,7 @@ for date in total:
         print('error with: ')
         print(date)
 
+#Gets monthly average for stock
 def monthlyNstock(month_list):
     total = 0
     date, price = zip(*month_list)
