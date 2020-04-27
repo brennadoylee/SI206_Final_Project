@@ -272,6 +272,8 @@ for i in info_list:
 	twe = i[1]
 	list_dates.append(date)
 	tweets.append(twe)
+list_dates = list_dates[::-1]
+tweets = tweets[::-1]
 # print(len(list_dates))
 # print(len(tweets))
 
@@ -279,8 +281,8 @@ for i in info_list:
 plt.figure(1)
 tweet_ax = plt.subplot(1,2,1)
 tweet_ax.plot(list_dates, tweets, color = "cyan")
-plt.suptitle("Tweet count vs Average Ending Stock of Conventional Motor Gasoline")
-plt.ylabel("Tweet Counts")
+plt.suptitle("CDC Tweet Count vs Average Ending Stock of Conventional Motor Gasoline")
+plt.ylabel("Tweet Counts CDC Has Released Containing Word COVID or Coronavirus")
 plt.xlabel("Date")
 plt.xticks(fontsize = 8, rotation = 45)
 tweet_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
