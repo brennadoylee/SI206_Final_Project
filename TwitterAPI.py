@@ -139,7 +139,7 @@ for tweet in covid_tweet_count:
 # creating a graph of the number of Covid related tweets per day from the TotalTweet Data
 fig = plt.figure(figsize = (10,5))
 ax = fig.add_subplot(111)
-ax.plot(reverse(total_dates), tweet_count, color = "green")
+ax.plot(reverse(total_dates), tweet_count, color = "purple")
 plt.xticks(fontsize = 8, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
@@ -231,7 +231,7 @@ nasdaq_dec_prices =  nasdaq_prices[10:]
 #creating the graph
 fig = plt.figure(1)
 tweet_ax = plt.subplot(1,2,1)
-tweet_ax.plot(reverse(total_dates), tweet_count, color = "royalblue")
+tweet_ax.plot(reverse(total_dates), tweet_count, color = "mediumturquoise")
 plt.suptitle("CDC Coronavirus-related Tweet Count vs NASDAQ Closing Stock Prices in Dollars")
 plt.ylabel("Number of Tweets the CDC Has Released Containing Word 'COVID' or 'Coronavirus' Since December 1, 2019")
 plt.xlabel("Date")
@@ -239,7 +239,7 @@ plt.xticks(fontsize = 8, rotation = 90)
 tweet_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 
 nas_ax = plt.subplot(1, 2, 2)
-plt.plot(nasdaq_dec_dates, nasdaq_dec_prices, color = "greenyellow")
+plt.plot(nasdaq_dec_dates, nasdaq_dec_prices, color = "orchid")
 plt.xlabel('Date')
 plt.ylabel('NASDAQ Closing Stock Price ')
 plt.xticks(fontsize = 8, rotation = 90)
