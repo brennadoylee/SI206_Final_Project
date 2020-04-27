@@ -140,11 +140,11 @@ for tweet in covid_tweet_count:
 fig = plt.figure(figsize = (10,5))
 ax = fig.add_subplot(111)
 ax.plot(reverse(total_dates), tweet_count, color = "green")
-plt.xticks(fontsize = 5, rotation = 90)
+plt.xticks(fontsize = 8, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
-ax.set_ylabel("Number of Tweets")
-ax.set_title("Number of Tweets the CDC has Released containing the word 'COVID' since Deceber 1, 2019")
+ax.set_ylabel("Tweet Frequency")
+ax.set_title("Number of Tweets the CDC has Released containing the word 'COVID' or 'Coronavirus' since Deceber 1, 2019")
 ax.grid()
 fig.savefig("total_tweets.png")
 plt.show()
@@ -201,38 +201,49 @@ ax = fig.add_subplot(111)
 ax.plot(reverse(pos_dates), pos_tweets, color = "green", label = "positive")
 ax.plot(neg_tweets, color = "red", label = "negative")
 ax.plot(neutral_tweets, color = "blue", label = "neutral")
-plt.xticks(fontsize = 5, rotation = 90)
+plt.xticks(fontsize = 8, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
-ax.set_ylabel("Number of Tweets")
-ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'coronavirus' released by the CDC since December 1, 2019")
+ax.set_ylabel("Tweet Frequency")
+ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'Coronavirus' released by the CDC since December 1, 2019")
 ax.grid()
 ax.legend()
 fig.savefig("setiment_analysis.png")
 plt.show()
 
-# -------------------------- NASDAQ vs Tweets --------------------
+# -------------------------- Joint Visualization between CDC Tweets about COVID19 and Nasdaq Stock Prices in Since December 1, 2019 --------------------
+
+# pulling and organizing the data
 def nasdaq_data(cur = cur, conn = conn):
-    cur.execute('SELECT ClosingPrice FROM Nasdaq')
+    cur.execute('SELECT Date, ClosingPrice FROM Nasdaq')
     data = cur.fetchall()
     return data 
 
 nasdaq_data = nasdaq_data(cur, conn)
+nasdaq_dates = []
+nasdaq_prices = []
+for data in nasdaq_data:
+    nasdaq_dates.append(data[0])
+    nasdaq_prices.append(data[1])
+nasdaq_dec_dates = nasdaq_dates[10:]
+nasdaq_dec_prices =  nasdaq_prices[10:]
 
-fig = plt.figure(figsize = (10,5))
-ax = fig.add_subplot(111)
-par1 = ax.twinx()
-ax.plot(reverse(total_dates), tweet_count, color = "green", label = "Tweet Count")
-ax.plot(nasdaq_data, color = "red", label = "Nasdaq Data")
-plt.xticks(fontsize = 5, rotation = 90)
-ax.xaxis.set_major_locator(ticker.LinearLocator(10))
-ax.set_ylim(0,25)
-par1.set_ylim(0, 118.67)
-ax.set_xlabel("Dates")
-ax.set_ylabel("Number of Tweets")
-par1.set_ylabel("Nasdaq Prices")
-ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'Virus' released by the CDC since December 1, 2019")
-ax.grid()
-ax.legend()
-fig.savefig("setiment_analysis.png")
+#creating the graph
+fig = plt.figure(1)
+tweet_ax = plt.subplot(1,2,1)
+tweet_ax.plot(reverse(total_dates), tweet_count, color = "mediumturquoise")
+plt.suptitle("CDC Coronavirus-related Tweet Count vs NASDAQ Closing Stock Prices in Dollars")
+plt.ylabel("Number of Tweets the CDC Has Released Containing Word 'COVID' or 'Coronavirus' Since December 1, 2019")
+plt.xlabel("Date")
+plt.xticks(fontsize = 8, rotation = 90)
+tweet_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+
+nas_ax = plt.subplot(1, 2, 2)
+plt.plot(nasdaq_dec_dates, nasdaq_dec_prices, color = "orchid")
+plt.xlabel('Date')
+plt.ylabel('NASDAQ Closing Stock Price ')
+plt.xticks(fontsize = 8, rotation = 90)
+nas_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+
+fig.savefig("TweetCountvsNasdaq")
 plt.show()
