@@ -231,7 +231,7 @@ nasdaq_dec_prices =  nasdaq_prices[10:]
 #creating the graph
 fig = plt.figure(1)
 tweet_ax = plt.subplot(1,2,1)
-tweet_ax.plot(reverse(total_dates), tweet_count, color = "mediumturquoise")
+tweet_ax.plot(reverse(total_dates), tweet_count, color = "royalblue")
 plt.suptitle("CDC Coronavirus-related Tweet Count vs NASDAQ Closing Stock Prices in Dollars")
 plt.ylabel("Number of Tweets the CDC Has Released Containing Word 'COVID' or 'Coronavirus' Since December 1, 2019")
 plt.xlabel("Date")
@@ -239,7 +239,7 @@ plt.xticks(fontsize = 8, rotation = 90)
 tweet_ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 
 nas_ax = plt.subplot(1, 2, 2)
-plt.plot(nasdaq_dec_dates, nasdaq_dec_prices, color = "orchid")
+plt.plot(nasdaq_dec_dates, nasdaq_dec_prices, color = "greenyellow")
 plt.xlabel('Date')
 plt.ylabel('NASDAQ Closing Stock Price ')
 plt.xticks(fontsize = 8, rotation = 90)
