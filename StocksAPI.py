@@ -20,7 +20,7 @@ def getCompanyInfo(symbols):
     return company_info
 
 
-def getHistoricalPrices(stock):
+def getHistoricalPrices(stock, start, end):
     return get_historical_data(stock, start, end, close_only = True, token="pk_0b97f59343db4ac18746910e73a44945")
 
 #Date Range
@@ -32,10 +32,9 @@ conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
 
-'''
 #Collecting Information for Nasdaq Stock
 count = 0
-historicalPrices = getHistoricalPrices('NDAQ')
+historicalPrices = getHistoricalPrices('NDAQ', start, end)
 columns = ['close', 'volume']
 cur.execute("DROP TABLE IF EXISTS Nasdaq")
 cur.execute("CREATE TABLE IF NOT EXISTS Nasdaq(Date PRIMARY KEY, ClosingPrice)")
@@ -48,7 +47,7 @@ for d in historicalPrices:
         print('Pausing for a bit...')
         time.sleep(5)
 
-'''
+
 #Retrieve NASDAQ stock price by a certain day
 def Ndate(year = 2020, month = 4, day = 1):
     if len(str(month)) == 1:
