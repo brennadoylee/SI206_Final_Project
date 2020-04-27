@@ -79,12 +79,13 @@ conn = sqlite3.connect(path + '/' + "finalprojectdatabase.db")
 cur = conn.cursor()
 
 #creating table for sentiment analysis of only covid tweets table
+'''
 count = 0
 cur.execute("DROP TABLE IF EXISTS TweetSentiment")
 cur.execute("CREATE TABLE IF NOT EXISTS TweetSentiment(id TEXT PRIMARY KEY, date TEXT, sentiment TEXT , tweet TEXT)")
 conn.commit()
 for tweet in all_tweets:
-    if "COVID" or "virus" in tweet[3]:
+    if "COVID" or "coronavirus" in tweet[3]:
         count += 1
         cur.execute("INSERT OR IGNORE INTO TweetSentiment VALUES (?, ?, ?, ?)", (tweet[0], tweet[1], tweet[2],tweet[3]))
         conn.commit()
@@ -104,7 +105,7 @@ all_tweet_count = {}
 for tweet in all_tweets:
     date = tweet[1]
     text = tweet[3]
-    if "COVID" or "virus" in text:
+    if "COVID" or "coronavirus" in text:
         if date not in corona_tweet_count:
             corona_tweet_count[date] = 1
         else:
@@ -116,7 +117,7 @@ for key in corona_tweet_count:
     if count % 10 == 0:
         print('Pausing for a bit...')
         time.sleep(5)
-
+'''
 
 # -------------- PULLING DATA / CREATING MATPLOTLIB GRAPHS --------------------
 
@@ -143,7 +144,7 @@ plt.xticks(fontsize = 5, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
 ax.set_ylabel("Number of Tweets")
-ax.set_title("Number of Tweets the CDC has Released containing the word 'COVID' or 'Virus' since Deceber 1, 2019")
+ax.set_title("Number of Tweets the CDC has Released containing the word 'COVID' since Deceber 1, 2019")
 ax.grid()
 fig.savefig("total_tweets.png")
 plt.show()
@@ -204,6 +205,32 @@ plt.xticks(fontsize = 5, rotation = 90)
 ax.xaxis.set_major_locator(ticker.LinearLocator(10))
 ax.set_xlabel("Dates")
 ax.set_ylabel("Number of Tweets")
+ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'coronavirus' released by the CDC since December 1, 2019")
+ax.grid()
+ax.legend()
+fig.savefig("setiment_analysis.png")
+plt.show()
+
+# -------------------------- NASDAQ vs Tweets --------------------
+def nasdaq_data(cur = cur, conn = conn):
+    cur.execute('SELECT ClosingPrice FROM Nasdaq')
+    data = cur.fetchall()
+    return data 
+
+nasdaq_data = nasdaq_data(cur, conn)
+
+fig = plt.figure(figsize = (10,5))
+ax = fig.add_subplot(111)
+par1 = ax.twinx()
+ax.plot(reverse(total_dates), tweet_count, color = "green", label = "Tweet Count")
+ax.plot(nasdaq_data, color = "red", label = "Nasdaq Data")
+plt.xticks(fontsize = 5, rotation = 90)
+ax.xaxis.set_major_locator(ticker.LinearLocator(10))
+ax.set_ylim(0,25)
+par1.set_ylim(0, 118.67)
+ax.set_xlabel("Dates")
+ax.set_ylabel("Number of Tweets")
+par1.set_ylabel("Nasdaq Prices")
 ax.set_title("Sentiment Analysis of Every Tweet Containing the word 'COVID' or 'Virus' released by the CDC since December 1, 2019")
 ax.grid()
 ax.legend()
